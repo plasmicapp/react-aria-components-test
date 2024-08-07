@@ -56,9 +56,20 @@ export default function Home() {
 function ListBoxChild(props: { children: string }) {
   const propsContext = useContext(ListBoxContext);
   const stateContext = useContext(ListStateContext);
-  console.log("ListBoxContext", propsContext); // null, not set by ListBox?
-  console.log("ListStateContext", stateContext); // null, not set by ListBox?
-  return <ListBoxItem>{props.children}</ListBoxItem>
+  console.log("ListBoxChild - ListBoxContext", propsContext); // null due to lazy rendering?
+  console.log("ListBoxChild - ListStateContext", stateContext); // null due to lazy rendering?
+  return <ListBoxItem>
+    {props.children}
+    <ListBoxInner />
+  </ListBoxItem>;
+}
+
+function ListBoxInner() {
+  const propsContext = useContext(ListBoxContext);
+  const stateContext = useContext(ListStateContext);
+  console.log("ListBoxInner - ListBoxContext", propsContext); // not null, it has been rendered
+  console.log("ListBoxInner - ListStateContext", stateContext); // not null, it has been rendered
+  return null;
 }
 
 function SelectChild(props: { children: string }) {
